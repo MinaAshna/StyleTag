@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B408F9722A5DAB440092B5F6 /* PhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B408F9712A5DAB440092B5F6 /* PhotoPickerView.swift */; };
 		B4DD8C9D2A5DAAB7004A0BED /* StyleTagApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DD8C9C2A5DAAB7004A0BED /* StyleTagApp.swift */; };
 		B4DD8C9F2A5DAAB7004A0BED /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DD8C9E2A5DAAB7004A0BED /* Persistence.swift */; };
 		B4DD8CA22A5DAAB7004A0BED /* StyleTag.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B4DD8CA02A5DAAB7004A0BED /* StyleTag.xcdatamodeld */; };
-		B4DD8CA42A5DAAB7004A0BED /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DD8CA32A5DAAB7004A0BED /* ContentView.swift */; };
 		B4DD8CA62A5DAAB9004A0BED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4DD8CA52A5DAAB9004A0BED /* Assets.xcassets */; };
 		B4DD8CAA2A5DAAB9004A0BED /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4DD8CA92A5DAAB9004A0BED /* Preview Assets.xcassets */; };
 		B4DD8CB42A5DAAB9004A0BED /* StyleTagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DD8CB32A5DAAB9004A0BED /* StyleTagTests.swift */; };
@@ -36,11 +36,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B408F9712A5DAB440092B5F6 /* PhotoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerView.swift; sourceTree = "<group>"; };
 		B4DD8C992A5DAAB7004A0BED /* StyleTag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StyleTag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4DD8C9C2A5DAAB7004A0BED /* StyleTagApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleTagApp.swift; sourceTree = "<group>"; };
 		B4DD8C9E2A5DAAB7004A0BED /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		B4DD8CA12A5DAAB7004A0BED /* StyleTag.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StyleTag.xcdatamodel; sourceTree = "<group>"; };
-		B4DD8CA32A5DAAB7004A0BED /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B4DD8CA52A5DAAB9004A0BED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B4DD8CA72A5DAAB9004A0BED /* StyleTag.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StyleTag.entitlements; sourceTree = "<group>"; };
 		B4DD8CA92A5DAAB9004A0BED /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -101,11 +101,11 @@
 			children = (
 				B4DD8C9C2A5DAAB7004A0BED /* StyleTagApp.swift */,
 				B4DD8C9E2A5DAAB7004A0BED /* Persistence.swift */,
-				B4DD8CA32A5DAAB7004A0BED /* ContentView.swift */,
 				B4DD8CA52A5DAAB9004A0BED /* Assets.xcassets */,
 				B4DD8CA72A5DAAB9004A0BED /* StyleTag.entitlements */,
 				B4DD8CA02A5DAAB7004A0BED /* StyleTag.xcdatamodeld */,
 				B4DD8CA82A5DAAB9004A0BED /* Preview Content */,
+				B408F9712A5DAB440092B5F6 /* PhotoPickerView.swift */,
 			);
 			path = StyleTag;
 			sourceTree = "<group>";
@@ -267,7 +267,7 @@
 			files = (
 				B4DD8C9D2A5DAAB7004A0BED /* StyleTagApp.swift in Sources */,
 				B4DD8C9F2A5DAAB7004A0BED /* Persistence.swift in Sources */,
-				B4DD8CA42A5DAAB7004A0BED /* ContentView.swift in Sources */,
+				B408F9722A5DAB440092B5F6 /* PhotoPickerView.swift in Sources */,
 				B4DD8CA22A5DAAB7004A0BED /* StyleTag.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
