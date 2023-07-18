@@ -9,8 +9,10 @@ import SwiftUI
 import PhotosUI
 
 struct PhotoPickerView: View {
+    @Environment(\.managedObjectContext) var moc
+    @Environment(\.dismiss) var dismiss
     @ObservedObject private var outfitModel: OutfitModel
-    
+
     init(viewModel: OutfitModel? = nil) {
         if let viewModel = viewModel {
             self.outfitModel = viewModel
@@ -21,11 +23,9 @@ struct PhotoPickerView: View {
     
     var body: some View {
         VStack {
-     
-            Spacer()
-            
             OutfitImageView(imageState: outfitModel.imageState)
                 .scaledToFit()
+                .padding()
             
             Spacer()
             
@@ -33,11 +33,33 @@ struct PhotoPickerView: View {
                          matching: .images,
                          photoLibrary: .shared()) {
                 Text("Choose a photo from your library")
-                    .foregroundColor(.black)
+                    .padding(16)
+                    .foregroundColor(.white)
+                    .background(.black)
+                    .padding()
             }
-            
-            Spacer()
                         
+            if case OutfitModel.ImageState.success(_, _) = outfitModel.imageState {
+                Button {
+                    let outfitMoc = Outfit(context: moc)
+                    outfitMoc.id = UUID()
+                    outfitMoc.name = outfitModel.name
+                    
+                    let encoder = JSONEncoder()
+                    if let data = try? encoder.encode(outfitModel.selectedImageData) {
+                        outfitMoc.image = data
+                    }
+                    try? moc.save()
+                    
+                    dismiss()
+                } label: {
+                    Text("Save my outfit")
+                        .padding(16)
+                        .foregroundColor(.white)
+                        .background(.black)
+                        .padding(4)
+                }
+            }
         }
     }
 }
@@ -47,4 +69,5 @@ struct PhotoPickerView_Previews: PreviewProvider {
         PhotoPickerView()
     }
 }
+
 

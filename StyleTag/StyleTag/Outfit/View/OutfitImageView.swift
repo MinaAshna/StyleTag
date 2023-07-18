@@ -12,7 +12,7 @@ struct OutfitImageView: View {
     
     var body: some View {
         switch imageState {
-        case .success(let image):
+        case .success(let image, _):
             image.resizable()
 
         case .loading:

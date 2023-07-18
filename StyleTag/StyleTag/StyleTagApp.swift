@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct StyleTagApp: App {
-    let persistenceController = PersistenceController.shared
+    @StateObject private var persistenceController = PersistenceController()
     
     var body: some Scene {
         WindowGroup {
-            PhotoPickerView()
+            OutfitsView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

@@ -8,51 +8,45 @@
 import SwiftUI
 import PhotosUI
 
-@MainActor
-class OutfitModel: ObservableObject {
+enum TransferError: Error {
+    case importFailed
+}
 
+//@MainActor
+class OutfitModel: ObservableObject {
+    
     init(imageState: ImageState = .empty) {
         self.imageState = imageState
     }
+    
     // MARK: - Profile Details
     
-    @Published var firstName: String = ""
-    @Published var lastName: String = ""
+    @Published var name: String = ""
     @Published var aboutMe: String = ""
+    var selectedImageData: Data?
     
     // MARK: - Profile Image
     
     enum ImageState {
         case empty
         case loading(Progress)
-        case success(Image)
+        case success(Image, Data)
         case failure(Error)
     }
     
-    enum TransferError: Error {
-        case importFailed
-    }
+    
     
     struct OutfitImage: Transferable {
         let image: Image
+        let imageData: Data
         
         static var transferRepresentation: some TransferRepresentation {
             DataRepresentation(importedContentType: .image) { data in
-            #if canImport(AppKit)
-                guard let nsImage = NSImage(data: data) else {
-                    throw TransferError.importFailed
+                do {
+                    return try OutfitImage(image: data.toImage(), imageData: data)
+                } catch {
+                    throw error
                 }
-                let image = Image(nsImage: nsImage)
-                return OutfitImage(image: image)
-            #elseif canImport(UIKit)
-                guard let uiImage = UIImage(data: data) else {
-                    throw TransferError.importFailed
-                }
-                let image = Image(uiImage: uiImage)
-                return OutfitImage(image: image)
-            #else
-                throw TransferError.importFailed
-            #endif
             }
         }
     }
@@ -81,7 +75,8 @@ class OutfitModel: ObservableObject {
                 }
                 switch result {
                 case .success(let outfitImage?):
-                    self.imageState = .success(outfitImage.image)
+                    self.imageState = .success(outfitImage.image, outfitImage.imageData)
+                    self.selectedImageData = outfitImage.imageData
                 case .success(nil):
                     self.imageState = .empty
                 case .failure(let error):
@@ -89,5 +84,23 @@ class OutfitModel: ObservableObject {
                 }
             }
         }
+    }
+}
+
+extension Data {
+    func toImage() throws -> Image {
+#if canImport(AppKit)
+        guard let nsImage = NSImage(data: self) else {
+            throw TransferError.importFailed
+        }
+        return Image(nsImage: nsImage)
+#elseif canImport(UIKit)
+        guard let uiImage = UIImage(data: self) else {
+            throw TransferError.importFailed
+        }
+        return Image(uiImage: uiImage)
+#else
+        throw TransferError.importFailed
+#endif
     }
 }
