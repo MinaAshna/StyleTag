@@ -8,24 +8,21 @@
 import SwiftUI
 import PhotosUI
 
-enum TransferError: Error {
-    case importFailed
-}
 
 //@MainActor
-class OutfitModel: ObservableObject {
-    
-    init(imageState: ImageState = .empty) {
-        self.imageState = imageState
+class PhotoPickerModel: ObservableObject {
+    @Published var selectedImageData: Data?
+    @Published private(set) var imageState: ImageState = .empty
+    @Published var imageSelection: PhotosPickerItem? = nil {
+        didSet {
+            if let imageSelection {
+                let progress = loadTransferable(from: imageSelection)
+                imageState = .loading(progress)
+            } else {
+                imageState = .empty
+            }
+        }
     }
-    
-    // MARK: - Profile Details
-    
-    @Published var name: String = ""
-    @Published var aboutMe: String = ""
-    var selectedImageData: Data?
-    
-    // MARK: - Profile Image
     
     enum ImageState {
         case empty
@@ -33,8 +30,6 @@ class OutfitModel: ObservableObject {
         case success(Image, Data)
         case failure(Error)
     }
-    
-    
     
     struct OutfitImage: Transferable {
         let image: Image
@@ -50,21 +45,6 @@ class OutfitModel: ObservableObject {
             }
         }
     }
-    
-    @Published private(set) var imageState: ImageState = .empty
-    
-    @Published var imageSelection: PhotosPickerItem? = nil {
-        didSet {
-            if let imageSelection {
-                let progress = loadTransferable(from: imageSelection)
-                imageState = .loading(progress)
-            } else {
-                imageState = .empty
-            }
-        }
-    }
-    
-    // MARK: - Private Methods
     
     private func loadTransferable(from imageSelection: PhotosPickerItem) -> Progress {
         return imageSelection.loadTransferable(type: OutfitImage.self) { result in
@@ -85,6 +65,10 @@ class OutfitModel: ObservableObject {
             }
         }
     }
+}
+
+enum TransferError: Error {
+    case importFailed
 }
 
 extension Data {

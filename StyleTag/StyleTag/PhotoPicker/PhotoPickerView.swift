@@ -11,25 +11,25 @@ import PhotosUI
 struct PhotoPickerView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
-    @ObservedObject private var outfitModel: OutfitModel
+    @ObservedObject private var photoPickerModel: PhotoPickerModel
 
-    init(viewModel: OutfitModel? = nil) {
+    init(viewModel: PhotoPickerModel? = nil) {
         if let viewModel = viewModel {
-            self.outfitModel = viewModel
+            self.photoPickerModel = viewModel
         } else {
-            self.outfitModel = OutfitModel()
+            self.photoPickerModel = PhotoPickerModel()
         }
     }
     
     var body: some View {
         VStack {
-            OutfitImageView(imageState: outfitModel.imageState)
+            OutfitImageView(imageState: photoPickerModel.imageState)
                 .scaledToFit()
                 .padding()
             
             Spacer()
             
-            PhotosPicker(selection: $outfitModel.imageSelection,
+            PhotosPicker(selection: $photoPickerModel.imageSelection,
                          matching: .images,
                          photoLibrary: .shared()) {
                 Text("Choose a photo from your library")
@@ -39,14 +39,13 @@ struct PhotoPickerView: View {
                     .padding()
             }
                         
-            if case OutfitModel.ImageState.success(_, _) = outfitModel.imageState {
+            if case PhotoPickerModel.ImageState.success(_, _) = photoPickerModel.imageState {
                 Button {
                     let outfitMoc = Outfit(context: moc)
                     outfitMoc.id = UUID()
-                    outfitMoc.name = outfitModel.name
                     
                     let encoder = JSONEncoder()
-                    if let data = try? encoder.encode(outfitModel.selectedImageData) {
+                    if let data = try? encoder.encode(photoPickerModel.selectedImageData) {
                         outfitMoc.image = data
                     }
                     try? moc.save()

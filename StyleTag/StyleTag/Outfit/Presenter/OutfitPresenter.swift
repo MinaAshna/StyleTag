@@ -6,19 +6,17 @@
 //
 
 import Foundation
-import CoreData
+import SwiftUI
 
 class OutfitPresenter {
-    private var moc: NSManagedObjectContext
-    
-    init(moc: NSManagedObjectContext) {
-        self.moc = moc
-    }
-    
-    func save(outfit: OutfitModel) {
-        let outfitMoc = Outfit(context: moc)
-        outfitMoc.name = outfit.name
-        outfitMoc.image = outfit.selectedImageData
-        try? moc.save()
+    func dataToImage(_ data: Data) -> Image? {
+        do {
+            let decoder = JSONDecoder()
+            let imageData = try decoder.decode(Data.self, from: data)
+            return try imageData.toImage()
+        } catch {
+            print("Error converting data to image: \(error)")
+            return nil
+        }
     }
 }

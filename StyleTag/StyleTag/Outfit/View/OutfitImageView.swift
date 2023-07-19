@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OutfitImageView: View {
-    let imageState: OutfitModel.ImageState
+    let imageState: PhotoPickerModel.ImageState
     
     var body: some View {
         switch imageState {
